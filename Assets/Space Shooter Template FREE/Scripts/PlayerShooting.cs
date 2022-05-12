@@ -17,7 +17,7 @@ public class PlayerShooting : MonoBehaviour {
     public float fireRate;
 
     [Tooltip("projectile prefab")]
-    public GameObject projectileObject;
+    public List<GameObject> projectileObjects;
 
     //time for a new shot
     [HideInInspector] public float nextFire;
@@ -60,6 +60,7 @@ public class PlayerShooting : MonoBehaviour {
     //method for a shot
     void MakeAShot() 
     {
+        var projectileObject = projectileObjects[Random.Range(0, projectileObjects.Count)];
         switch (weaponPower) // according to weapon power 'pooling' the defined anount of projectiles, on the defined position, in the defined rotation
         {
             case 1:
@@ -89,10 +90,14 @@ public class PlayerShooting : MonoBehaviour {
                 CreateLazerShot(projectileObject, guns.rightGun.transform.position, new Vector3(0, 0, -15));
                 break;
         }
+
+       
     }
 
     void CreateLazerShot(GameObject lazer, Vector3 pos, Vector3 rot) //translating 'pooled' lazer shot to the defined position in the defined rotation
     {
         Instantiate(lazer, pos, Quaternion.Euler(rot));
     }
+
+
 }
